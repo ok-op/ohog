@@ -13,47 +13,52 @@ function fetchVideo() {
     })
     .then(response => response.json())
     .then(data => {
+        console.log(data);  // Check the structure of the response
+
         videoResults.innerHTML = ''; // Clear loading text
 
-        if (data.video || data.image) {
-            const videoCard = document.createElement('div');
-            videoCard.classList.add('video-card');
+        // Check if there are video results
+        if (data.videos && data.videos.length > 0) {
+            data.videos.forEach(video => {
+                const videoCard = document.createElement('div');
+                videoCard.classList.add('video-card');
 
-            if (data.video) {
-                const videoWrapper = document.createElement('div');
-                videoWrapper.classList.add('video-wrapper');
+                if (video.src) {
+                    const videoWrapper = document.createElement('div');
+                    videoWrapper.classList.add('video-wrapper');
 
-                const videoTag = document.createElement('video');
-                videoTag.controls = true;
-                videoTag.src = data.video;
-                videoTag.innerHTML = 'Your browser does not support the video tag.';
+                    const videoTag = document.createElement('video');
+                    videoTag.controls = true;
+                    videoTag.src = video.src;
+                    videoTag.innerHTML = 'Your browser does not support the video tag.';
 
-                videoWrapper.appendChild(videoTag);
-                videoCard.appendChild(videoWrapper);
+                    videoWrapper.appendChild(videoTag);
+                    videoCard.appendChild(videoWrapper);
 
-                const downloadLink = document.createElement('a');
-                downloadLink.href = data.video;
-                downloadLink.classList.add('btn');
-                downloadLink.setAttribute('download', '');
-                downloadLink.textContent = 'Download Video';
-                videoCard.appendChild(downloadLink);
-            }
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = video.src;
+                    downloadLink.classList.add('btn');
+                    downloadLink.setAttribute('download', '');
+                    downloadLink.textContent = 'Download Video';
+                    videoCard.appendChild(downloadLink);
+                }
 
-            if (data.image) {
-                const imgTag = document.createElement('img');
-                imgTag.src = data.image;
-                imgTag.alt = 'Thumbnail';
-                videoCard.appendChild(imgTag);
+                if (video.poster) {
+                    const imgTag = document.createElement('img');
+                    imgTag.src = video.poster;
+                    imgTag.alt = 'Thumbnail';
+                    videoCard.appendChild(imgTag);
 
-                const imgDownloadLink = document.createElement('a');
-                imgDownloadLink.href = data.image;
-                imgDownloadLink.classList.add('btn');
-                imgDownloadLink.setAttribute('download', '');
-                imgDownloadLink.textContent = 'Download Thumbnail';
-                videoCard.appendChild(imgDownloadLink);
-            }
+                    const imgDownloadLink = document.createElement('a');
+                    imgDownloadLink.href = video.poster;
+                    imgDownloadLink.classList.add('btn');
+                    imgDownloadLink.setAttribute('download', '');
+                    imgDownloadLink.textContent = 'Download Thumbnail';
+                    videoCard.appendChild(imgDownloadLink);
+                }
 
-            videoResults.appendChild(videoCard);
+                videoResults.appendChild(videoCard);
+            });
         } else {
             videoResults.innerHTML = '<div class="alert">No video found or invalid URL.</div>';
         }
