@@ -3,333 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pinterest Video Downloader - Download Pinterest Videos Instantly</title>
-
-    <style>
-        * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f4f7f6;
-    color: #333;
-    max-width: 100%;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #444;
-}
-
-/* Align input box and button horizontally */
-.input-group {
-    display: flex;
-    flex-direction: column; /* Stack input and button on mobile */
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.input-group input {
-    width: 90%; /* Increase width for mobile */
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    font-size: 1.1em;
-}
-
-.input-group button {
-    width: 90%; /* Increase width for mobile */
-    padding: 12px;
-    margin-top: 10px; /* Space between input and button */
-    border-radius: 6px;
-    border: none;
-    background-color: #28a745;
-    color: #fff;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.input-group button:hover {
-    background-color: #218838;
-}
-
-/* Flexbox layout for video and download link */
-.video-container {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    margin-top: 30px;
-}
-
-.video-card {
-    display: flex;
-    flex-direction: column; /* Stack video and button vertically */
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-}
-
-.video-card:hover {
-    transform: translateY(-5px);
-}
-
-/* Responsive video container */
-.video-wrapper {
-    position: relative;
-    padding-bottom: 30%; /* 16:9 ratio */
-    width: 100%; /* Full width */
-    height: 0; /* Auto height based on aspect ratio */
-    overflow: hidden;
-    border-radius: 6px;
-    margin-bottom: 20px; /* Space below video */
-}
-
-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-}
-
-/* Download link styling */
-.btn {
-    text-decoration: none;
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    white-space: nowrap;
-    margin: 5px; /* Space above and below buttons */
-}
-
-.btn:hover {
-    background-color: #0056b3;
-}
-
-.alert {
-    padding: 20px;
-    background-color: #f44336; /* Red */
-    color: white;
-    margin-bottom: 15px;
-}
-
-/* Media queries for smaller screens */
-@media (max-width: 768px) {
-    .input-group {
-        flex-direction: column; /* Stack input and button */
-        align-items: stretch; /* Stretch elements to full width */
-    }
-    
-    .video-card {
-        flex-direction: column; /* Stack video and download button */
-        margin: 0 10px; /* Add margin for spacing */
-    }
-
-    .video-wrapper {
-        width: 100%; /* Full width */
-        padding-bottom: 56.25%; /* Maintain aspect ratio */
-        margin-bottom: 20px; /* Space below video */
-    }
-
-    .video-container {
-        padding: 0 15px; /* Add padding for small screens */
-    }
-}
-
-/* SEO Content Section */
-.content-section {
-    margin-top: 40px;
-    padding: 0 10px; /* Add padding for small screens */
-}
-
-.content-section p {
-    line-height: 1.8;
-    font-size: 1.1em;
-    margin-bottom: 20px;
-}
-
-.content-section h2 {
-    margin-top: 20px;
-    font-size: 1.6em;
-    color: #444;
-}
-
-.copyright {
-    text-align: center;
-}
-
-main {
-    padding: 10px 50px;
-}
-
-.content-section ol,
-.content-section ul {
-    margin-left: 30px;
-}
-
-footer {
-    background: #333;
-    color: #fff;
-    padding: 10px;
-}
-
-nav {
-    text-align: center;
-    height: 50px;
-    background: #eaeaea;
-    padding: 10px;
-}
-
-nav a {
-    height: 20px;
-    padding: 10px;
-}
-
-.hero {
-    padding: 65px 10px 0px; /* Adjust padding for mobile */
-}
-
-.loader {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: none; /* Hidden by default */
-    border: 5px solid #f3f3f3; /* Light gray */
-    border-top: 5px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-    </style>
+    <title>Pinterest Video Downloader</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
+
     <header>
         <nav>
             <a href="#">Home</a>
         </nav>
     </header>
+
     <main>
-    <div class="hero">
-    <h1>Pinterest Video Downloader</h1>
-    <div class="input-group">
-        <input type="text" id="urlInput" placeholder="Enter Pinterest video URL..." />
-        <button onclick="fetchVideo()">Download Video</button>
-    </div>
-    </div>    
-    <div id="videoResults" class="video-container"></div>
+        <div class="hero">
+            <h1>Pinterest Video Downloader</h1>
+            <div class="input-group">
+                <input type="text" id="urlInput" placeholder="Enter Pinterest video URL..." />
+                <button onclick="fetchVideo()">Download</button>
+            </div>
+        </div>    
 
+        <div id="videoResults" class="video-container"></div>
     </main>
+
     <footer>
-      <div class="copyright"> <div class="container text-center"> Copyright &copy; 2024 - Pinterest Video Downloader</div> </div>
+        <div class="copyright"> 
+            <div class="container text-center">Copyright &copy; 2024 - Pinterest Video Downloader</div> 
+        </div>
     </footer>
-    <script>
-        function fetchVideo() {
-            const url = document.getElementById('urlInput').value;
-            
-            const videoResults = document.getElementById('videoResults');
-            videoResults.innerHTML = ''; // Clear previous results
 
-            // Show the loader
-            const loader = document.createElement('div');
-            loader.classList.add('loader');
-            videoResults.appendChild(loader);
-            loader.style.display = 'block'; // Display loader
-
-            // AJAX request to fetch_source.php
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'fetch_source.js', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Parse the JSON response
-                    loader.style.display = 'none'; // Hide loader after response
-                    const response = JSON.parse(xhr.responseText);
-                    const videoContainer = document.getElementById('videoResults');
-                    
-                    // Clear any previous results
-                    videoContainer.innerHTML = '';
-
-                    // Check if there are videos in the response
-                    if (response.videos && response.videos.length > 0) {
-                        response.videos.forEach(video => {
-                            // Create a video card
-                            const videoCard = document.createElement('div');
-                            videoCard.classList.add('video-card');
-
-                            // Create video wrapper for responsive sizing
-                            const videoWrapper = document.createElement('div');
-                            videoWrapper.classList.add('video-wrapper');
-
-                            // Create video element
-                            const videoTag = document.createElement('video');
-                            videoTag.controls = true;
-                            videoTag.src = video.src;
-                            videoTag.poster = video.poster;
-                            videoTag.innerHTML = 'Your browser does not support the video tag.';
-                            
-                            videoWrapper.appendChild(videoTag);
-
-                            // Create video-content div to hold video and download link
-                            const videoContent = document.createElement('div');
-                            videoContent.classList.add('video-content');
-                            
-                            // Create download link
-                            const downloadLink = document.createElement('a');
-                            downloadLink.href = video.src;
-                            downloadLink.download = true;
-                            downloadLink.classList.add('btn');
-                            downloadLink.textContent = 'Download Video';
-                            
-                            // Create thumb download link
-                            const downloadLink1 = document.createElement('a');
-                            downloadLink1.href = video.poster;
-                            downloadLink1.download = true;
-                            downloadLink1.classList.add('btn');
-                            downloadLink1.textContent = 'Download Thumbnail';
-
-                            // Append video and download link to video-content
-                            videoContent.appendChild(videoWrapper);
-                            videoContent.appendChild(downloadLink);
-                            videoContent.appendChild(downloadLink1);
-
-                            // Append video-content to the card
-                            videoCard.appendChild(videoContent);
-
-                            // Append the card to the container
-                            videoContainer.appendChild(videoCard);
-                        });
-                    } else if (response.error) {
-                        // Display error if any
-                        videoContainer.innerHTML = `<p style="color: red;">${response.error}</p>`;
-                    } else {
-                        videoContainer.innerHTML = '<div class="alert">No videos found.</div>';
-                    }
-                }
-            };
-            xhr.send('url=' + encodeURIComponent(url));
-        }
-    </script>
-
+    <script src="script.js"></script>
 </body>
-      </html>
+</html>
