@@ -6,7 +6,7 @@ function fetchVideo() {
     videoResults.innerHTML = '<p>Loading...</p>';
 
     // API Request
-    fetch('https://oapi-ok-ops-projects.vercel.app/fetch-video/', {
+    fetch('https://oapi-ok-ops-projects.vercel.app/fetch-video', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: url })
@@ -41,20 +41,6 @@ function fetchVideo() {
                     downloadLink.setAttribute('download', '');
                     downloadLink.textContent = 'Download Video';
                     videoCard.appendChild(downloadLink);
-                }
-
-                if (video.poster) {
-                    const imgTag = document.createElement('img');
-                    imgTag.src = video.poster;
-                    imgTag.alt = 'Thumbnail';
-                    videoCard.appendChild(imgTag);
-
-                    const imgDownloadLink = document.createElement('a');
-                    imgDownloadLink.href = video.poster;
-                    imgDownloadLink.classList.add('btn');
-                    imgDownloadLink.setAttribute('download', '');
-                    imgDownloadLink.textContent = 'Download Thumbnail';
-                    videoCard.appendChild(imgDownloadLink);
                 }
 
                 videoResults.appendChild(videoCard);
