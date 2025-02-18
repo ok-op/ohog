@@ -6,7 +6,7 @@ function fetchVideo() {
     videoResults.innerHTML = '<p>Loading...</p>';
 
     // API Request
-    fetch('https://oapi-ok-ops-projects.vercel.app:3000/fetch-video', {
+    fetch('https://oapi-ok-ops-projects.vercel.app/fetch-video', {
         method: 'POST',  // Use POST method
         headers: { 'Content-Type': 'application/json' },  // Send content type as JSON
         body: JSON.stringify({ url: url })  // Send URL in request body
@@ -18,8 +18,8 @@ function fetchVideo() {
         // Clear the loading message
         videoResults.innerHTML = '';
 
-        // Check if there are video results
-        if ((data.videos && data.videos.length > 0) || (data.images && data.images.length > 0)) {
+        // Check if there are video or image results
+        if (data.videos && data.videos.length > 0) {
             // Display videos
             data.videos.forEach(video => {
                 const videoCard = document.createElement('div');
@@ -45,8 +45,10 @@ function fetchVideo() {
 
                 videoResults.appendChild(videoCard);
             });
+        }
 
-            // Display images
+        // Display images if available
+        if (data.images && data.images.length > 0) {
             data.images.forEach(image => {
                 const imageCard = document.createElement('div');
                 imageCard.classList.add('video-card');
@@ -65,12 +67,15 @@ function fetchVideo() {
 
                 videoResults.appendChild(imageCard);
             });
-        } else {
+        }
+
+        // If no media is found
+        if (!(data.videos && data.videos.length > 0) && !(data.images && data.images.length > 0)) {
             videoResults.innerHTML = '<div class="alert">No media found on this page.</div>';
         }
     })
     .catch(error => {
-        console.error('Error fetching video:', error);
-        videoResults.innerHTML = '<div class="alert">Error fetching video. Please try again.</div>';
+        console.error('Error fetching media:', error);
+        videoResults.innerHTML = '<div class="alert">Error fetching media. Please try again.</div>';
     });
 }
