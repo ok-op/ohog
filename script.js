@@ -1,21 +1,22 @@
 function fetchVideo() {
-    const url = document.getElementById('urlInput').value;
-    const videoResults = document.getElementById('videoResults');
+    const url = document.getElementById('urlInput').value;  // Get the URL from the input
+    const videoResults = document.getElementById('videoResults');  // Where the results will be displayed
 
     // Clear previous results
     videoResults.innerHTML = '<p>Loading...</p>';
 
     // API Request
-    fetch('https://oapi-ok-ops-projects.vercel.app/fetch-video', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url })
+    fetch('https://oapi-qtwajiyyh-ok-ops-projects.vercel.app/fetch-video', {
+        method: 'POST',  // Use POST method
+        headers: { 'Content-Type': 'application/json' },  // Send content type as JSON
+        body: JSON.stringify({ url: url })  // Send URL in request body
     })
-    .then(response => response.json())
+    .then(response => response.json())  // Parse JSON response
     .then(data => {
-        console.log(data);  // Check the structure of the response
+        console.log(data);  // Log the response to check the structure
 
-        videoResults.innerHTML = ''; // Clear loading text
+        // Clear the loading message
+        videoResults.innerHTML = '';
 
         // Check if there are video results
         if (data.videos && data.videos.length > 0) {
@@ -41,6 +42,20 @@ function fetchVideo() {
                     downloadLink.setAttribute('download', '');
                     downloadLink.textContent = 'Download Video';
                     videoCard.appendChild(downloadLink);
+                }
+
+                if (video.poster) {
+                    const imgTag = document.createElement('img');
+                    imgTag.src = video.poster;
+                    imgTag.alt = 'Thumbnail';
+                    videoCard.appendChild(imgTag);
+
+                    const imgDownloadLink = document.createElement('a');
+                    imgDownloadLink.href = video.poster;
+                    imgDownloadLink.classList.add('btn');
+                    imgDownloadLink.setAttribute('download', '');
+                    imgDownloadLink.textContent = 'Download Thumbnail';
+                    videoCard.appendChild(imgDownloadLink);
                 }
 
                 videoResults.appendChild(videoCard);
